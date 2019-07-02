@@ -6,4 +6,6 @@ const Doctor = require('./doctor.js');
 const first = new Unit("aleshka");
 const firstDoctor = new Doctor("aleshka2");
 console.log(first);
+first.earnExperience(2500);
+console.log(first);
 console.log(firstDoctor);

@@ -8,12 +8,14 @@ class Unit {
     static get damageXp(){
         return 500;
     }
+    static get maxXp(){
+        return 1000
+    }
 
     constructor(name) {
         this.health = Unit.maxHealth;
         this.level = 1;
         this.xp = 0;
-        this._MAX_XP = 1000;
         this.name = name;
     }
 
@@ -30,7 +32,7 @@ class Unit {
     }
 
     addHealth(amount) {
-        var tempHealth = this.health + amount.valueOf();
+        let tempHealth = this.health + amount.valueOf();
         (tempHealth > Unit.maxHealth) ? this.health = Unit.maxHealth : this.health = tempHealth;
     }
 
@@ -41,15 +43,16 @@ class Unit {
 
     earnExperience(amount) {
         this.xp += amount.valueOf();
-        if (this.xp > this._MAX_XP) {
+        if (this.xp > Unit.maxXp) {
             this.levelUp();
         }
     }
 
     levelUp() {
         console.log(this.name + " level up!");
-        this.xp -= this._MAX_XP;
+        this.xp -= Unit.maxXp;
         ++this.level;
+        if(this.xp > Unit.maxXp) {this.levelUp()}
     }
 
     static calculateActionPower(unit, value) {
