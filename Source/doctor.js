@@ -7,7 +7,8 @@ class Doctor extends Unit {
     }
 
     heal(unit){
-        unit.health += Unit.actionPower(this, this.healPower);
+        unit.addHealth(Unit.calculateActionPower(this, this.healPower));
+        this.earnExperience(Unit.ca)
     }
 }
 

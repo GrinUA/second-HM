@@ -2,6 +2,12 @@ class Unit {
     static get maxHealth() {
         return 100;
     }
+    static get actionXp(){
+        return 250;
+    }
+    static get damageXp(){
+        return 500;
+    }
 
     constructor(name) {
         this.health = Unit.maxHealth;
@@ -30,6 +36,7 @@ class Unit {
 
     takeDamage(amount) {
         this.health -= amount.valueOf();
+        this.earnExperience(Unit.actionXp);
     }
 
     earnExperience(amount) {
@@ -45,11 +52,10 @@ class Unit {
         ++this.level;
     }
 
-    static actionPower(unit, value) {
+    static calculateActionPower(unit, value) {
         if (unit.getLevel() > 1) {
             return value * (1 + unit.getLevel()/10);
         } else return value;
-
     }
 }
 
