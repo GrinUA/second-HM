@@ -32,17 +32,21 @@ class Unit {
     }
 
     addHealth(amount) {
-        let tempHealth = this.health + amount.valueOf();
-        (tempHealth > Unit.maxHealth) ? this.health = Unit.maxHealth : this.health = tempHealth;
+        if (this.isAlive()) {
+            let tempHealth = this.health + amount.valueOf();
+            (tempHealth > Unit.maxHealth) ? this.health = Unit.maxHealth : this.health = tempHealth;
+        }
     }
 
     takeDamage(amount) {
         this.health -= amount.valueOf();
-        this.earnExperience(Unit.actionXp);
+        this.earnExperience(Unit.damageXp);
     }
 
     earnExperience(amount) {
-        this.xp += amount.valueOf();
+        let level = this.getLevel();
+        (level > 1) ? amount = amount * (1 - level / 10) : amount;
+        this.xp += amount;
         if (this.xp > Unit.maxXp) {
             this.levelUp();
         }
@@ -54,11 +58,9 @@ class Unit {
         ++this.level;
         if(this.xp > Unit.maxXp) {this.levelUp()}
     }
-
-    static calculateActionPower(unit, value) {
-        if (unit.getLevel() > 1) {
-            return value * (1 + unit.getLevel()/10);
-        } else return value;
+    calculateActionPower(value) {
+        let level = this.getLevel();
+       return (level > 1) ? value * (1 + level / 10) : value;
     }
 }
 
